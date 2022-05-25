@@ -1,6 +1,6 @@
 #### Storage Account for all functions ####
-resource "azurerm_storage_account" "sa_IaC" {
-  name                     = "${var.project}sta${var.location.code}${var.environment}${var.unique_string}"
+resource "azurerm_storage_account" "sa_IaC_test" {
+  name                     = "${var.project}sta${var.location.code}${var.environment}IAC"
   location                 = var.location.name
   resource_group_name      = var.resource_group_name
   account_tier             = "Standard"
