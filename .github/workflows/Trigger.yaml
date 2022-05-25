@@ -13,37 +13,37 @@ on:
 jobs:
   Plan_Dev:
     if: "${{ github.event.inputs.environments == 'dev' }}"
-    uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_plan.yml@master
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@master
     with:
       environment: dev
 
   Deploy_Dev:
     needs: Plan_Dev
-    uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_apply.yml@master
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@master
     with:
       environment: dev
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
-    uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_plan.yml@master
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@master
     with:
       environment: pre
 
   Deploy_Pre:
     needs: [Plan_Pre, Deploy_Dev]
-    uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_apply.yml@master
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@master
     with:
       environment: pre
 
   Plan_Pro:
     if: "${{ github.event.inputs.environments == 'pro' }}"
-    uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_plan.yml@master
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@master
     with:
       environment: pro
 
   Deploy_Prod:
     needs: [Plan_Pro, Deploy_Pre]
-    uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_apply.yml@master
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@master
     with:
       environment: pro
 env:
