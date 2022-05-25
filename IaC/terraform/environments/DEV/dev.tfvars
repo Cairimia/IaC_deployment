@@ -13,5 +13,5 @@ location = {
 }
 
 # Imported resources
-keyvault_name = "iac-kv-dev"
+keyvault_name          = "iac-kv-dev"
 keyvault_unique_string = "001"

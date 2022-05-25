@@ -14,9 +14,9 @@ project_iteration = 01
 
 # Tags
 binding_tags = {
-  app                = "IaC"
-  project            = "IaC"
-  businessunit       = "tests"
-  costcenter         = "tests"
-  buildby            = "sisifo"
+  app          = "IaC"
+  project      = "IaC"
+  businessunit = "tests"
+  costcenter   = "tests"
+  buildby      = "sisifo"
 }
