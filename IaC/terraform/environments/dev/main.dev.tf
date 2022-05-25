@@ -40,14 +40,6 @@ provider "azurerm" {
   }
 }
 
-# Project Variables
-variable "business_unit" {
-  type = string
-}
-variable "department" {
-  type = string
-}
-
 variable "location" {
   type = map(string)
 }

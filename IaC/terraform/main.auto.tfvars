@@ -1,8 +1,3 @@
-# DEFAULT PROJECT INFO
-# Department
-business_unit = "tests"
-department    = "tests"
-
 # Location
 location = {
   name = "westeurope" // region
