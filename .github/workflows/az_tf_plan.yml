@@ -1,0 +1,75 @@
+name: 'Build_TF_Plan'
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment prefix to deploy into'
+        required: true
+        type: string
+      tf_key:
+        description: 'Specifies the Terraform state file name for this plan. Workflow artifact will use same name'
+        required: true
+        type: string
+      tf_vars_file:
+        description: 'Specifies the Terraform TFVARS file.'
+        required: true
+        type: string
+        
+env:
+  TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
+  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+  CONTAINER_NAME: tfstate
+  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
+  TF_KEY: terraform${{ inputs.environment }}.tfstate
+  TF_VARS: ${{ inputs.environment }}.tfvars
+  ###AZURE Client details###
+  DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+
+jobs:
+  build-plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.ROOT_TERRAFORM_MODULE }}
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1.3.2
+
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt --check
+
+      - name: Terraform Init
+        id: init
+        run: terraform init --backend-config="storage_account_name=$STORAGE_ACCOUNT" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP" --backend-config="key=$TF_KEY"
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan --var-file=$TF_VARS --out=plan.tfplan
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Compress TF Plan artifact
+        run: zip -r ${{ env.TF_KEY }}.zip ./*
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: '${{ inputs.tf_key }}'
+          path: '${{ env.ROOT_TERRAFORM_MODULE }}/${{ env.TF_KEY }}.zip'
+          retention-days: 5
