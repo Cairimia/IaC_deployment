@@ -47,7 +47,6 @@ jobs:
     with:
       environment: pro
 env:
-  TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
   CONTAINER_NAME: tfstate
   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
