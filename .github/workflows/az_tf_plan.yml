@@ -13,6 +13,7 @@ env:
   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
   TF_KEY: terraform${{ inputs.environment }}.tfstate
   TF_VARS: main.auto.tfvars
+  TF_VARS_ENV: ${{ inputs.environment }}.tfvars
   ROOT_TERRAFORM_MODULE: 'IaC/terraform'
   ENV_TERRAFORM_MODULE: 'IaC/terraform/environments/${{ inputs.environment }}'
   ###AZURE Client details###
@@ -45,8 +46,9 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan --var-file=$TF_VARS --out=plan.tfplan
+        run: terraform plan --var-file=$TF_VARS_ENV --out=plan.tfplan
         continue-on-error: true
+        working-directory: ${{ ENV_TERRAFORM_MODULE }}
 
       - name: Terraform Plan Status
         if: steps.plan.outcome == 'failure'
