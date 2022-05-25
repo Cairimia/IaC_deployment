@@ -13,12 +13,13 @@ env:
   CONTAINER_NAME: tfstate
   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
   TF_KEY: terraform${{ inputs.environment }}.tfstate
-  TF_VARS: ${{ inputs.environment }}.tfvars
+  TF_VARS: main.auto.tfvars
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+  ENV_TERRAFORM_MODULE: 'IaC/terraform/environments/${{ inputs.environment }}'
   ###AZURE Client details###
   DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
   PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
   PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-  ROOT_TERRAFORM_MODULE: 'IaC/terraform/environments/${{ inputs.environment }}'
 
 jobs:
   apply-plan:
