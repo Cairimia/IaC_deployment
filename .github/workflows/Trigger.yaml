@@ -16,105 +16,45 @@ jobs:
     uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_plan.yml@master
     with:
       environment: dev
-    secrets:
-      TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
-      STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-      CONTAINER_NAME: tfstate
-      RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-      TF_KEY: terraform${{ inputs.environment }}.tfstate
-      TF_VARS: ${{ inputs.environment }}.tfvars
-      ###AZURE Client details###
-      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-      ROOT_TERRAFORM_MODULE: 'IaC/terraform'
 
   Deploy_Dev:
     needs: Plan_Dev
     uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_apply.yml@master
     with:
       environment: dev
-    secrets:
-      TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
-      STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-      CONTAINER_NAME: tfstate
-      RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-      TF_KEY: terraform${{ inputs.environment }}.tfstate
-      TF_VARS: ${{ inputs.environment }}.tfvars
-      ###AZURE Client details###
-      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-      ROOT_TERRAFORM_MODULE: 'IaC/terraform'
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
     uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_plan.yml@master
     with:
       environment: pre
-    secrets:
-      TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
-      STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-      CONTAINER_NAME: tfstate
-      RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-      TF_KEY: terraform${{ inputs.environment }}.tfstate
-      TF_VARS: ${{ inputs.environment }}.tfvars
-      ###AZURE Client details###
-      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-      ROOT_TERRAFORM_MODULE: 'IaC/terraform'
 
   Deploy_Pre:
     needs: [Plan_Pre, Deploy_Dev]
     uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_apply.yml@master
     with:
       environment: pre
-    secrets:
-      TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
-      STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-      CONTAINER_NAME: tfstate
-      RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-      TF_KEY: terraform${{ inputs.environment }}.tfstate
-      TF_VARS: ${{ inputs.environment }}.tfvars
-      ###AZURE Client details###
-      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-      ROOT_TERRAFORM_MODULE: 'IaC/terraform'
 
   Plan_Pro:
     if: "${{ github.event.inputs.environments == 'pro' }}"
     uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_plan.yml@master
     with:
       environment: pro
-    secrets:
-      TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
-      STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-      CONTAINER_NAME: tfstate
-      RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-      TF_KEY: terraform${{ inputs.environment }}.tfstate
-      TF_VARS: ${{ inputs.environment }}.tfvars
-      ###AZURE Client details###
-      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-      ROOT_TERRAFORM_MODULE: 'IaC/terraform'
 
   Deploy_Prod:
     needs: [Plan_Pro, Deploy_Pre]
     uses: Pwd9000-ML/Azure-Terraform-Deployments/.github/workflows/az_tf_apply.yml@master
     with:
       environment: pro
-    secrets:
-      TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
-      STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-      CONTAINER_NAME: tfstate
-      RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-      TF_KEY: terraform${{ inputs.environment }}.tfstate
-      TF_VARS: ${{ inputs.environment }}.tfvars
-      ###AZURE Client details###
-      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-      ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+env:
+  TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
+  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+  CONTAINER_NAME: tfstate
+  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
+  TF_KEY: terraform${{ inputs.environment }}.tfstate
+  TF_VARS: ${{ inputs.environment }}.tfvars
+  ###AZURE Client details###
+  DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
