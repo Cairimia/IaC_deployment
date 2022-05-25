@@ -58,3 +58,19 @@ locals {
     }
   )
 }
+
+variable "keyvault_name" {
+  type = string
+}
+
+variable "group_object_id" {
+  type = string
+}
+
+variable "keyvault_unique_string" {
+  type = string
+}
+
+variable "function_storage_account_replication_type" {
+  type = string
+}
