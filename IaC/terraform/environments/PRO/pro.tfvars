@@ -2,7 +2,7 @@
 resource_group_name = "IaC-Deployment-RG-pro"
 environment         = "pro"
 
-unique_string = "001"
+unique_string = "888"
 
 function_storage_account_replication_type = "LRS"
 

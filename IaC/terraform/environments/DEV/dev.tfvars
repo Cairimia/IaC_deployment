@@ -2,7 +2,7 @@
 resource_group_name = "IaC-Deployment-RG-dev"
 environment         = "dev"
 
-unique_string = "999"
+unique_string = "888"
 
 function_storage_account_replication_type = "LRS"
 
