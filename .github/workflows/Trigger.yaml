@@ -56,4 +56,4 @@ env:
   DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
   PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
   PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
-  ROOT_TERRAFORM_MODULE: 'IaC/terraform/environments/${{ inputs.environment }}'
+  ROOT_TERRAFORM_MODULE: 'IaC_deploymentIaC/terraform/environments/${{ inputs.environment }}'
