@@ -6,14 +6,6 @@ on:
         description: 'Environment prefix to deploy into'
         required: true
         type: string
-      tf_key:
-        description: 'Specifies the Terraform state file name for this plan. Workflow artifact will use same name'
-        required: true
-        type: string
-      tf_vars_file:
-        description: 'Specifies the Terraform TFVARS file.'
-        required: true
-        type: string
         
 env:
   TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
@@ -70,6 +62,6 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: '${{ inputs.tf_key }}'
+          name: '${{ env.TF_KEY }}'
           path: '${{ env.ROOT_TERRAFORM_MODULE }}/${{ env.TF_KEY }}.zip'
           retention-days: 5
