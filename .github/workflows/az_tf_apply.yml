@@ -1,0 +1,47 @@
+### Reusable workflow to download terraform artifact built by `az_tf_plan` and apply the artifact/plan ###
+name: 'Apply_TF_Plan'
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: 'Environment prefix to deploy into'
+        required: true
+        type: string
+        
+env:
+  TF_VARS_FILE: ${{ inputs.environment }}.tfvars.
+  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+  CONTAINER_NAME: tfstate
+  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
+  TF_KEY: terraform${{ inputs.environment }}.tfstate
+  TF_VARS: ${{ inputs.environment }}.tfvars
+  ###AZURE Client details###
+  DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+
+jobs:
+  apply-plan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.ROOT_TERRAFORM_MODULE }}
+
+    steps:
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: ${{ env.TF_KEY }}
+          path: ${{ env.ROOT_TERRAFORM_MODULE }}
+
+      - name: Decompress TF Plan artifact
+        run: unzip ${{ env.TF_KEY }}.zip
+
+      - name: Terraform Init
+        id: init
+        run: terraform init --backend-config="storage_account_name=$STORAGE_ACCOUNT" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP" --backend-config="key=$TF_KEY"
+
+      - name: Terraform Apply
+        run: terraform apply plan.tfplan
