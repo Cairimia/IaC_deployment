@@ -1,20 +1,30 @@
 name: 'Deploy IaC per Environment'
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:
+    inputs:
+      environments:
+        description: 'Environment to deploy: dev, pre or pro'
+        type: choice  
+        options:
+        - dev
+        - pre
+        - pro
+env:
+  DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
 
 jobs:
   #### DEV ENVIRONMENT DEPLOYMENT ####
   dev_environment:
+    if: "${{ github.event.inputs.environments == 'dev' }}"
     name: 'Terraform DEV'
     runs-on: ubuntu-latest
     environment: dev
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
-        working-directory: ./IaC/terraform
+        working-directory: IaC/terraform/environments/${{ inputs.environment }}
         shell: bash
     steps:
       # Checkout the repository to the GitHub Actions runner
@@ -29,7 +39,7 @@ jobs:
       - name: Terraform Init
         run: terraform init
         env:
-          tf_actions_working_dir: ./environments/DEV
+          tf_actions_working_dir: IaC/terraform/environments/${{ inputs.environment }}
           args: 'var-file="dev.tfvars"'
       - name: Terraform Format
         run: terraform fmt -check
@@ -41,7 +51,7 @@ jobs:
       - run: echo ${{ steps.plan.outputs.exitcode }}
       # On push to main, build or change infrastructure according to Terraform configuration files
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event.inputs.environments == 'dev'
         run: terraform apply -auto-approve
           
   #### PRE ENVIRONMENT DEPLOYMENT ####
