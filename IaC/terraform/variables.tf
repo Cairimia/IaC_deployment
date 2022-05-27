@@ -1,94 +1,43 @@
-terraform {
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "=2.99.0"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
-terraform {
-  backend "azurerm" {
-    resource_group_name  = "IaC-Deployment-RG-dev"
-    storage_account_name = "iacsadev"
-    container_name       = "state"
-    key                  = "dev.tfstate"
-  }
-}
-
-# Provider Variables
-variable "azurerm_subscription_id" {
-  type = string
-}
-variable "azurerm_client_id" {
-  type = string
-}
-variable "azurerm_client_secret" {
-  type = string
-}
-variable "azurerm_tenant_id" {
-  type = string
-}
-
-# Project Variables
-variable "business_unit" {
-  type = string
-}
-variable "department" {
-  type = string
+variable "resource_group_name" {
+  type        = string
+  description = "Specifies the name of the resource group that will be created."
 }
 
 variable "location" {
-  type = map(string)
+  type        = string
+  description = "The location/region where Azure resource will be created."
+  default     = "uksouth"
 }
 
-variable "environment" {
-  type = string
+variable "key_vault_name" {
+  type        = string
+  description = "Specifies a key vault name"
 }
 
-variable "unique_string" {
-  type = string
-}
-variable "resource_group_name" {
-  type = string
-}
-
-variable "project" {
-  type = string
+variable "use_rbac_mode" {
+  type        = bool
+  description = "Specifies to use rbac mode. (Optional)"
+  default     = null
 }
 
-variable "project_iteration" {
-  type = number
+variable "tags" {
+  type        = map(any)
+  description = "Specifies a map of tags to be applied to the resources created."
 }
 
-variable "binding_tags" {
-  type    = map(string)
-  default = {}
 
-  description = "Binding tags defined by resource"
-}
+##################################
+##################################
 
-locals {
-  project_tags = merge(
-    var.binding_tags,
-    {
-      "environment" = var.environment
-    }
-  )
-}
-
-variable "keyvault_name" {
-  type = string
-}
-
-variable "group_object_id" {
-  type = string
-}
-
-variable "keyvault_unique_string" {
-  type = string
+variable "storage_config" {
+  type = list(object({
+    name                      = string
+    account_kind              = string
+    account_tier              = string
+    account_replication_type  = string
+    access_tier               = string
+    enable_https_traffic_only = bool
+    min_tls_version           = string
+    is_hns_enabled            = bool
+  }))
 }
