@@ -14,8 +14,7 @@ env:
   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
   TF_KEY: terraform${{ inputs.environment }}.tfstate
   TF_VARS: ${{ inputs.environment }}.tfvars
-  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
-  ENV__TERRAFORM_MODULE: 'IaC/terraform/environments/${{ inputs.environment }}'
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform/environments/${{ inputs.environment }}'
   ###AZURE Client details###
   DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
   PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
@@ -27,7 +26,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ env.ENV_TERRAFORM_MODULE }}
+        working-directory: ${{ env.ROOT_TERRAFORM_MODULE }}
 
     steps:
       - name: Download Artifact
