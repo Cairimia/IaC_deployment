@@ -48,9 +48,9 @@ jobs:
       - name: Decompress TF Plan artifact
         run: unzip ${{ env.TF_KEY }}.zip
 
-      # - name: Az Login
-      #   run:
-      #     az login
+      - name: Az Login
+        run:
+          az login --allow-no-subscriptions
 
       - name: Terraform Init
         id: init
