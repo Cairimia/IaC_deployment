@@ -38,34 +38,34 @@ jobs:
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
 
-  Plan_Pre:
-    if: "${{ github.event.inputs.environments == 'pre' }}"
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-    with:
-      environment: pre
-    secrets:
-      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+  # Plan_Pre:
+  #   if: "${{ github.event.inputs.environments == 'pre' }}"
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+  #   with:
+  #     environment: pre
+  #   secrets:
+  #     PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
 
-  Deploy_Pre:
-    needs: [Plan_Pre, Deploy_Dev]
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    with:
-      environment: pre
-    secrets:
-      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+  # Deploy_Pre:
+  #   needs: [Plan_Pre, Deploy_Dev]
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+  #   with:
+  #     environment: pre
+  #   secrets:
+  #     PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
 
-  Plan_Pro:
-    if: "${{ github.event.inputs.environments == 'pro' }}"
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-    with:
-      environment: pro
-    secrets:
-      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  # Plan_Pro:
+  #   if: "${{ github.event.inputs.environments == 'pro' }}"
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+  #   with:
+  #     environment: pro
+  #   secrets:
+  #     PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-  Deploy_Prod:
-    needs: [Plan_Pro, Deploy_Pre]
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    with:
-      environment: pro
-    secrets:
-      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  # Deploy_Prod:
+  #   needs: [Plan_Pro, Deploy_Pre]
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+  #   with:
+  #     environment: pro
+  #   secrets:
+  #     PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
