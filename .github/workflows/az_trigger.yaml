@@ -45,26 +45,26 @@ jobs:
       DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
-  Plan_Pre:
-    if: "${{ github.event.inputs.environments == 'pre' }}"
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-    with:
-      environment: pre
+  # Plan_Pre:
+  #   if: "${{ github.event.inputs.environments == 'pre' }}"
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+  #   with:
+  #     environment: pre
 
-  Deploy_Pre:
-    needs: [Plan_Pre, Deploy_Dev]
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    with:
-      environment: pre
+  # Deploy_Pre:
+  #   needs: [Plan_Pre, Deploy_Dev]
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+  #   with:
+  #     environment: pre
 
-  Plan_Pro:
-    if: "${{ github.event.inputs.environments == 'pro' }}"
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-    with:
-      environment: pro
+  # Plan_Pro:
+  #   if: "${{ github.event.inputs.environments == 'pro' }}"
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+  #   with:
+  #     environment: pro
 
-  Deploy_Prod:
-    needs: [Plan_Pro, Deploy_Pre]
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    with:
-      environment: pro
+  # Deploy_Prod:
+  #   needs: [Plan_Pro, Deploy_Pre]
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+  #   with:
+  #     environment: pro
