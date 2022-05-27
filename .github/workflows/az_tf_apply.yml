@@ -8,17 +8,14 @@ on:
         required: true
         type: string
     secrets:
-      DEV_DEV_CLIENT_ID: 
-        description: 'Specifies the Azure ARM CLIENT ID.'
+      DEV_CREDENTIALS: 
+        description: 'Specifies the Azure DEV CREDS.'
         required: true
-      DEV_CLIENT_SECRET: 
-        description: 'Specifies the Azure ARM CLIENT SECRET.'
+      PRE_CREDENTIALS: 
+        description: 'Specifies the Azure PRE CREDS.'
         required: true
-      DEV_SUBSCRIPTION_ID:
-        description: 'Specifies the Azure ARM SUBSCRIPTION ID.'
-        required: true
-      DEV_TENANT_ID: 
-        description: 'Specifies the Azure ARM TENANT ID.'
+      PRO_CREDENTIALS:
+        description: 'Specifies the Azure PRO CREDS.'
         required: true
         
 env:
