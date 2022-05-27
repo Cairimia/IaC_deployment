@@ -50,7 +50,7 @@ jobs:
 
       - name: Az Login
         run:
-          az login -u "cata.irimia18yahoo.com" -p "Hamhammiaumiau!1"
+          az login
 
       - name: Terraform Init
         id: init
