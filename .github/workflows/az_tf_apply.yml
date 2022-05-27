@@ -9,7 +9,7 @@ on:
         type: string
     secrets:
       DEV_DEV_CLIENT_ID: 
-        description: "caa9a127-ff19-4a5d-986e-399405412731",
+        description: "caa9a127-ff19-4a5d-986e-399405412731"
       DEV_CLIENT_SECRET: 
         description: "48294428-ab48-4973-abc7-d0c6c5a6a1dd"
       DEV_SUBSCRIPTION_ID:
