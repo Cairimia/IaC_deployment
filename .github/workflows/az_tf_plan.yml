@@ -32,9 +32,11 @@ env:
 jobs:
   login-to-azure:
     runs-on: ubuntu-latest
-      run: |
-        az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }} || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
-        az account set --subscription ${{ secrets.DEV_SUBSCRIPTION_ID }} || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
+    steps:
+      -name: Login to azure
+        run: |
+          az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }} || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
+          az account set --subscription ${{ secrets.DEV_SUBSCRIPTION_ID }} || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
  
   build-plan:
     runs-on: ubuntu-latest
