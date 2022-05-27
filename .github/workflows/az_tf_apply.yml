@@ -48,6 +48,10 @@ jobs:
       - name: Decompress TF Plan artifact
         run: unzip ${{ env.TF_KEY }}.zip
 
+      - name: Az Login
+        run:
+          az login -u "cata.irimia18yahoo.com" -p "Hamhammiaumiau!1"
+
       - name: Terraform Init
         id: init
         run: terraform init -migrate-state --backend-config="storage_account_name=$STORAGE_ACCOUNT" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP" --backend-config="key=$TF_KEY"

@@ -46,7 +46,7 @@ jobs:
       
       - name: Az Login
         run:
-          az login --service-principal --username "caa9a127-ff19-4a5d-986e-399405412731" --password "9lVPr1z4hP9a9ahumAr37SM9Ugmcoww4bkcL9tI1PVs=" --tenant "9b3bd631-0b3e-44ca-9ee5-1e3cd8ab9652"
+          az login -u "cata.irimia18yahoo.com" -p "Hamhammiaumiau!1"
 
       - name: Terraform Init
         id: init
