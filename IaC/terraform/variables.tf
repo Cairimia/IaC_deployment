@@ -92,35 +92,3 @@ variable "group_object_id" {
 variable "keyvault_unique_string" {
   type = string
 }
-
-# DEFAULT PROJECT INFO
-# Department
-business_unit = "digital"
-department    = "digital"
-
-# Location
-location = {
-  name = "westeurope" // region
-  code = "weu1"       // used in the resource group name
-}
-
-project           = "redaia"
-project_iteration = 01
-
-# Tags
-binding_tags = {
-  app                = "redaia"
-  businesscontact    = ""
-  managedby          = ""
-  svc                = ""
-  dataclassification = "internal"
-  compliance         = ""
-  manteinancewindow  = ""
-  schedule           = ""
-  expirationdate     = ""
-  description        = "Voice interaction"
-  project            = "IAC"
-  businessunit       = "digital"
-  costcenter         = "digital"
-  buildby            = "IAC"
-}
