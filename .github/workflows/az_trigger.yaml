@@ -28,12 +28,22 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environment: dev
+    secrets:
+      DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+      DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
   Deploy_Dev:
     needs: Plan_Dev
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environment: dev
+    secrets:
+      DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+      DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
