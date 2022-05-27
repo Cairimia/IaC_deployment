@@ -9,14 +9,6 @@ on:
         - dev
         - pre
         - pro
-env:
-  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-  CONTAINER_NAME: tfstate
-  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-  TF_KEY: terraform.${{ inputs.environment }}.tfstate
-  TF_VARS: env.${{ inputs.environment }}.tfvars
-  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
-  ###AZURE Client details###
 
 jobs:
   Plan_Dev:
