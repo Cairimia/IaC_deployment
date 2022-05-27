@@ -32,9 +32,3 @@ storage_config = [
     is_hns_enabled            = true
   }
 ]
-
-tags = {
-  terraformDeployment = "true",
-  GithubRepo          = "https://github.com/Cairimia/IaC_deployment"
-  Environment         = "PRO"
-}
