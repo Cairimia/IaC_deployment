@@ -9,18 +9,18 @@ on:
         - dev
         - pre
         - pro
-env:
-  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-  CONTAINER_NAME: tfstate
-  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-  TF_KEY: terraform.${{ inputs.environment }}.tfstate
-  TF_VARS: env.${{ inputs.environment }}.tfvars
-  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
-  ###AZURE Client details###
-  DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-  DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-  DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-  DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+# env:
+#   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+#   CONTAINER_NAME: tfstate
+#   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
+#   TF_KEY: terraform.${{ inputs.environment }}.tfstate
+#   TF_VARS: env.${{ inputs.environment }}.tfvars
+#   ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+#   ###AZURE Client details###
+#   DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+#   DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+#   DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+#   DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
 jobs:
   Plan_Dev:
@@ -29,14 +29,10 @@ jobs:
     with:
       environment: dev
     secrets:
-      DEV_DEV_CLIENT_ID: 
-        description: "caa9a127-ff19-4a5d-986e-399405412731"
-      DEV_CLIENT_SECRET: 
-        description: "48294428-ab48-4973-abc7-d0c6c5a6a1dd"
-      DEV_SUBSCRIPTION_ID:
-        description: "9b3bd631-0b3e-44ca-9ee5-1e3cd8ab9652"
-      DEV_TENANT_ID: 
-        description: "9lVPr1z4hP9a9ahumAr37SM9Ugmcoww4bkcL9tI1PVs="
+      DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+      DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
   Deploy_Dev:
     needs: Plan_Dev
@@ -44,14 +40,10 @@ jobs:
     with:
       environment: dev
     secrets:
-      DEV_DEV_CLIENT_ID: 
-        description: "caa9a127-ff19-4a5d-986e-399405412731"
-      DEV_CLIENT_SECRET: 
-        description: "48294428-ab48-4973-abc7-d0c6c5a6a1dd"
-      DEV_SUBSCRIPTION_ID:
-        description: "9b3bd631-0b3e-44ca-9ee5-1e3cd8ab9652"
-      DEV_TENANT_ID: 
-        description: "9lVPr1z4hP9a9ahumAr37SM9Ugmcoww4bkcL9tI1PVs="
+      DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+      DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
