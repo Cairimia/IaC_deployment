@@ -7,17 +7,14 @@ on:
         required: true
         type: string
     secrets:
-      DEV_DEV_CLIENT_ID: 
-        description: 'Specifies the Azure ARM CLIENT ID.'
+      DEV_CREDENTIALS: 
+        description: 'Specifies the Azure DEV CREDS.'
         required: true
-      DEV_CLIENT_SECRET: 
-        description: 'Specifies the Azure ARM CLIENT SECRET.'
+      PRE_CREDENTIALS: 
+        description: 'Specifies the Azure PRE CREDS.'
         required: true
-      DEV_SUBSCRIPTION_ID:
-        description: 'Specifies the Azure ARM SUBSCRIPTION ID.'
-        required: true
-      DEV_TENANT_ID: 
-        description: 'Specifies the Azure ARM TENANT ID.'
+      PRO_CREDENTIALS:
+        description: 'Specifies the Azure PRO CREDS.'
         required: true
         
 env:
@@ -28,10 +25,9 @@ env:
   TF_VARS: env.${{ inputs.environment }}.tfvars
   ROOT_TERRAFORM_MODULE: 'IaC/terraform'
   ###AZURE Client details###
-  DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-  DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-  DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-  DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+  DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
 jobs:
   build-plan:

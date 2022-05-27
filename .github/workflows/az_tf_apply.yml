@@ -29,10 +29,9 @@ env:
   TF_VARS: env.${{ inputs.environment }}.tfvars
   ROOT_TERRAFORM_MODULE: 'IaC/terraform'
   ###AZURE Client details###
-  DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-  DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-  DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-  DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+  DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
 jobs:
   apply-plan:

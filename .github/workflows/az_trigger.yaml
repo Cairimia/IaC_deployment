@@ -1,38 +1,34 @@
 name: 'Trigger Deployment per Environment'
 on:
   workflow_dispatch:
-#     inputs:
-#       environments:
-#         description: 'Environment to deploy: dev, pre or pro'
-#         type: choice  
-#         options:
-#         - dev
-#         - pre
-#         - pro
-# env:
-#   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-#   CONTAINER_NAME: tfstate
-#   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-#   TF_KEY: terraform.${{ inputs.environment }}.tfstate
-#   TF_VARS: env.${{ inputs.environment }}.tfvars
-#   ROOT_TERRAFORM_MODULE: 'IaC/terraform'
-#   ###AZURE Client details###
-#   DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-#   DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-#   DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-#   DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+    inputs:
+      environments:
+        description: 'Environment to deploy: dev, pre or pro'
+        type: choice  
+        options:
+        - dev
+        - pre
+        - pro
+env:
+  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+  CONTAINER_NAME: tfstate
+  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
+  TF_KEY: terraform.${{ inputs.environment }}.tfstate
+  TF_VARS: env.${{ inputs.environment }}.tfvars
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+  ###AZURE Client details###
+  DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+  PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+  PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
 jobs:
   Plan_Dev:
-    # if: "${{ github.event.inputs.environments == 'dev' }}"
+    if: "${{ github.event.inputs.environments == 'dev' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environment: dev
     secrets:
-      DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
 
   Deploy_Dev:
     needs: Plan_Dev
@@ -40,31 +36,36 @@ jobs:
     with:
       environment: dev
     secrets:
-      DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
 
-  # Plan_Pre:
-  #   if: "${{ github.event.inputs.environments == 'pre' }}"
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-  #   with:
-  #     environment: pre
+  Plan_Pre:
+    if: "${{ github.event.inputs.environments == 'pre' }}"
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+    with:
+      environment: pre
+    secrets:
+      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
 
-  # Deploy_Pre:
-  #   needs: [Plan_Pre, Deploy_Dev]
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-  #   with:
-  #     environment: pre
+  Deploy_Pre:
+    needs: [Plan_Pre, Deploy_Dev]
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+    with:
+      environment: pre
+    secrets:
+      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
 
-  # Plan_Pro:
-  #   if: "${{ github.event.inputs.environments == 'pro' }}"
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-  #   with:
-  #     environment: pro
+  Plan_Pro:
+    if: "${{ github.event.inputs.environments == 'pro' }}"
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+    with:
+      environment: pro
+    secrets:
+      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-  # Deploy_Prod:
-  #   needs: [Plan_Pro, Deploy_Pre]
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-  #   with:
-  #     environment: pro
+  Deploy_Prod:
+    needs: [Plan_Pro, Deploy_Pre]
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+    with:
+      environment: pro
+    secrets:
+      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
