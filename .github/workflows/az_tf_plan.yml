@@ -47,8 +47,8 @@ jobs:
       - name: Terraform Init
         id: init
         run: 
-          az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }} || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
-          az account set --subscription ${{ secrets.DEV_SUBSCRIPTION_ID }} || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
+          az login --service-principal --username "caa9a127-ff19-4a5d-986e-399405412731" --password "9lVPr1z4hP9a9ahumAr37SM9Ugmcoww4bkcL9tI1PVs=" --tenant "9b3bd631-0b3e-44ca-9ee5-1e3cd8ab9652" || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
+          az account set --subscription "48294428-ab48-4973-abc7-d0c6c5a6a1dd" || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
           terraform init -migrate-state --backend-config="storage_account_name=$STORAGE_ACCOUNT" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP" --backend-config="key=$TF_KEY"
 
       - name: Terraform Validate
