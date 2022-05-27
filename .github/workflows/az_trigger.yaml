@@ -9,18 +9,18 @@ on:
 #         - dev
 #         - pre
 #         - pro
-# env:
-#   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-#   CONTAINER_NAME: tfstate
-#   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-#   TF_KEY: terraform.${{ inputs.environment }}.tfstate
-#   TF_VARS: env.${{ inputs.environment }}.tfvars
-#   ROOT_TERRAFORM_MODULE: 'IaC/terraform'
-#   ###AZURE Client details###
-#   DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-#   DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-#   DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
-#   DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+env:
+  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+  CONTAINER_NAME: tfstate
+  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
+  TF_KEY: terraform.${{ inputs.environment }}.tfstate
+  TF_VARS: env.${{ inputs.environment }}.tfvars
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+  ###AZURE Client details###
+  DEV_DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+  DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+  DEV_SUBSCRIPTION_ID: ${{ secrets.DEV_SUBSCRIPTION_ID }}
+  DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
 jobs:
   Plan_Dev:
