@@ -30,6 +30,12 @@ env:
   PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
 jobs:
+  login-to-azure:
+    runs-on: ubuntu-latest
+      run: |
+        az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }} || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
+        az account set --subscription ${{ secrets.DEV_SUBSCRIPTION_ID }} || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
+ 
   build-plan:
     runs-on: ubuntu-latest
     defaults:
@@ -37,13 +43,7 @@ jobs:
         shell: bash
         working-directory: ${{ env.ROOT_TERRAFORM_MODULE }}
         
-    steps:
-      - name: 'Setup Azure Credentials with Terraform Landing secrets'
-        id: setup-azure-credentials
-        run: |
-          az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }} || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
-          az account set --subscription ${{ secrets.DEV_SUBSCRIPTION_ID }} || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
-        
+    steps:        
       - name: Checkout
         uses: actions/checkout@v2
 
