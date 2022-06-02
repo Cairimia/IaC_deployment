@@ -16,6 +16,15 @@ on:
       PRO_CREDENTIALS:
         description: 'Specifies the Azure PRO CREDS.'
         required: true
+      DEV_CLIENT_ID: 
+        description: 'Specifies the Azure DEV CREDS.'
+        required: true
+      DEV_CLIENT_SECRET: 
+        description: 'Specifies the Azure PRE CREDS.'
+        required: true
+      DEV_TENANT_ID:
+        description: 'Specifies the Azure PRO CREDS.'
+        required: true
         
 env:
   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
