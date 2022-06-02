@@ -62,26 +62,8 @@ jobs:
 
       - name: Az Login
         run:
-          echo "::group::Selecting and getting secrets"
-          if [[ -z "${TF_SECRET}" ]];
-          then
-            echo "::error::There's an issue with the secret that handles the Landing of the environment"
-            secret_exists=false
-            echo "secret_exists: $secret_exists"
-            echo ::set-output  name=secret_exists::$secret_exists
-            exit 120
-          else
-            echo "Ok. Detected existing environment secret..."
-            echo "${TF_SECRET}" > secret.json        
-            jq .tf_landing ./secret.json > landing.tfvars.json
-            # create cloud.json if secret value tf_cloud found
-            [[ $(grep tf_cloud ./secret.json|wc -l) == 1 ]] && { jq .tf_cloud ./secret.json > cloud.tfvars.json || true; }
-            secret_exists=true
-            echo "secret_exists: $secret_exists"
-            rm secret.json
-          fi
-          echo "::endgroup::"
-          echo "::group::Setting up cloud credentials"
+          echo "::group::Selecting and getting secrets"     
+          jq .tf_landing ./secret.json > landing.tfvars.json
           export SUBSCRIPTION_ID=$(jq .azurerm_subscription_id landing.tfvars.json --raw-output) 
           export CLIENT_ID=$(jq .azurerm_client_id landing.tfvars.json --raw-output)
           export CLIENT_SECRET=$(jq .azurerm_client_secret landing.tfvars.json --raw-output) 
@@ -91,7 +73,7 @@ jobs:
           rm -fr landing.tfvars.json
           echo "::endgroup::
         env: 
-          TF_SECRET: ${{ secrets[github.event.inputs.environment] }}
+          TF_SECRET: ${{ secrets[github.event.inputs.environment] }}_CREDENTIALS
         shell: bash
 #          az login --service-principal --username $DEV_CLIENT_ID --password $DEV_CLIENT_SECRET --tenant $DEV_TENANT_ID      
 #          az login --allow-no-subscriptions
