@@ -91,7 +91,7 @@ jobs:
           rm -fr landing.tfvars.json
           echo "::endgroup::"
         env: 
-          TF_SECRET: ${{ env.DEV_CREDENTIALS }}
+          TF_SECRET: ${{ secrets.DEV_CREDENTIALS }}
         shell: bash
 #          az login --service-principal --username $DEV_CLIENT_ID --password $DEV_CLIENT_SECRET --tenant $DEV_TENANT_ID      
 #          az login --allow-no-subscriptions
