@@ -58,6 +58,7 @@ jobs:
       
       - name: Az Login
         run: |
+          az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }}
 # echo "::group::Selecting and getting secrets"
 # if [[ -z "${TF_SECRET}" ]];
 # then
@@ -89,9 +90,8 @@ jobs:
 # env: 
 # TF_SECRET: ${{ secrets.DEV_CREDENTIALS }}
 # shell: bash
-      
-          az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }}       
- #         az login --allow-no-subscriptions
+       
+# az login --allow-no-subscriptions
 
       - name: Terraform Init
         id: init
