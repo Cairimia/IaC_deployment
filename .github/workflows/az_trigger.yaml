@@ -6,9 +6,9 @@ on:
         description: 'Environment to deploy: dev, pre or pro'
         type: choice  
         options:
-        - dev
-        - pre
-        - pro
+        - DEV
+        - PRE
+        - PRO
 
 jobs:
   Plan_Dev:
