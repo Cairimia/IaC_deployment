@@ -20,6 +20,9 @@ jobs:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
   Deploy_Dev:
     needs: Plan_Dev
@@ -30,6 +33,9 @@ jobs:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"

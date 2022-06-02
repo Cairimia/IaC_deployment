@@ -28,6 +28,9 @@ env:
   DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
   PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
+  DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
+  DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
 
 jobs: 
   build-plan:
@@ -46,7 +49,8 @@ jobs:
       
       - name: Az Login
         run:
-          az login --allow-no-subscriptions
+          az login --service-principal --username $DEV_CLIENT_ID --password $DEV_CLIENT_SECRET --tenant $DEV_TENANT_ID       
+ #         az login --allow-no-subscriptions
 
       - name: Terraform Init
         id: init
