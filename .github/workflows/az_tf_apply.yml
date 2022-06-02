@@ -62,7 +62,8 @@ jobs:
 
       - name: Az Login
         run:
-          echo "::group::Selecting and getting secrets"     
+          echo "::group::Selecting and getting secrets"
+          echo "${TF_SECRET}" > secret.json       
           jq .tf_landing ./secret.json > landing.tfvars.json
           export SUBSCRIPTION_ID=$(jq .azurerm_subscription_id landing.tfvars.json --raw-output) 
           export CLIENT_ID=$(jq .azurerm_client_id landing.tfvars.json --raw-output)
