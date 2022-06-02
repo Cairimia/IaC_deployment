@@ -15,7 +15,7 @@ jobs:
     if: "${{ github.event.inputs.environments == 'dev' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: dev
+      environment: DEV
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -28,7 +28,7 @@ jobs:
     needs: Plan_Dev
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: dev
+      environment: DEV
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -41,7 +41,7 @@ jobs:
     if: "${{ github.event.inputs.environments == 'pre' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: pre
+      environment: PRE
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -54,7 +54,7 @@ jobs:
     needs: [Plan_Pre, Deploy_Dev]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: pre
+      environment: PRE
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -67,7 +67,7 @@ jobs:
     if: "${{ github.event.inputs.environments == 'pro' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: pro
+      environment: PRO
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -80,7 +80,7 @@ jobs:
     needs: [Plan_Pro, Deploy_Pre]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: pro
+      environment: PRO
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
