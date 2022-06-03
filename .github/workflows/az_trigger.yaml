@@ -23,6 +23,7 @@ jobs:
       DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
       DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Deploy_Dev:
     needs: Plan_Dev
@@ -36,6 +37,7 @@ jobs:
       DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
       DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
@@ -49,6 +51,7 @@ jobs:
       DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
       DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Deploy_Pre:
     needs: [Plan_Pre, Deploy_Dev]
@@ -62,6 +65,7 @@ jobs:
       DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
       DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Plan_Pro:
     if: "${{ github.event.inputs.environments == 'pro' }}"
@@ -75,6 +79,7 @@ jobs:
       DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
       DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Deploy_Prod:
     needs: [Plan_Pro, Deploy_Pre]
@@ -88,3 +93,4 @@ jobs:
       DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
       DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
       DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
+      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
