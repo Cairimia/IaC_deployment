@@ -6,91 +6,67 @@ on:
         description: 'Environment to deploy: dev, pre or pro'
         type: choice  
         options:
-        - DEV
-        - PRE
-        - PRO
+        - dev
+        - pre
+        - pro
 
 jobs:
   Plan_Dev:
     if: "${{ github.event.inputs.environments == 'dev' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: DEV
+      environment: dev
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Deploy_Dev:
     needs: Plan_Dev
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: DEV
+      environment: dev
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: PRE
+      environment: pre
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Deploy_Pre:
     needs: [Plan_Pre, Deploy_Dev]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: PRE
+      environment: pre
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Plan_Pro:
     if: "${{ github.event.inputs.environments == 'pro' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: PRO
+      environment: pro
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
   Deploy_Prod:
     needs: [Plan_Pro, Deploy_Pre]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: PRO
+      environment: pro
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-      DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-      DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-      DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-      DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}

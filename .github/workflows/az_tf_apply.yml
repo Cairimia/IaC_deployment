@@ -17,18 +17,6 @@ on:
       PRO_CREDENTIALS:
         description: 'Specifies the Azure PRO CREDS.'
         required: true
-      DEV_CLIENT_ID: 
-        description: 'Specifies the Azure DEV CREDS.'
-        required: true
-      DEV_CLIENT_SECRET: 
-        description: 'Specifies the Azure PRE CREDS.'
-        required: true
-      DEV_TENANT_ID:
-        description: 'Specifies the Azure PRO CREDS.'
-        required: true
-      DEV_SUBSCRIPTION_ID:
-        description: 'Specifies the Azure PRO CREDS.'
-        required: true
         
 env:
   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
@@ -41,10 +29,6 @@ env:
   DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
   PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-  DEV_CLIENT_ID: ${{ secrets.DEV_CLIENT_ID }}
-  DEV_CLIENT_SECRET: ${{ secrets.DEV_CLIENT_SECRET }}
-  DEV_TENANT_ID: ${{ secrets.DEV_TENANT_ID }}
-  DEV_SUBSCRIPTION_ID : ${{ secrets.DEV_SUBSCRIPTION_ID }}
 
 jobs:
   apply-plan:
@@ -65,41 +49,8 @@ jobs:
         run: unzip ${{ env.TF_KEY }}.zip
 
       - name: Az Login
-        run: |
+        run:
           az login --allow-no-subscriptions
-#   echo "::group::Selecting and getting secrets"
-#   if [[ -z "${TF_SECRET}" ]];
-#   then
-#     echo "::error::There's an issue with the secret that handles the Landing of the environment"
-#     secret_exists=false
-#     echo "secret_exists: $secret_exists"
-#     echo ::set-output  name=secret_exists::$secret_exists
-#     exit 120
-#   else
-#     echo "Ok. Detected existing environment secret..."
-#     echo "${TF_SECRET}" > secret.json        
-#     jq .tf_landing ./secret.json > landing.tfvars.json
-#     # create cloud.json if secret value tf_cloud found
-#     [[ $(grep tf_cloud ./secret.json|wc -l) == 1 ]] && { jq .tf_cloud ./secret.json > cloud.tfvars.json || true; }
-#     secret_exists=true
-#     echo "secret_exists: $secret_exists"
-#     rm secret.json
-#   fi
-#   echo "::endgroup::"
-#   echo "::group::Setting up cloud credentials"
-#   export SUBSCRIPTION_ID=$(jq .azurerm_subscription_id landing.tfvars.json --raw-output) 
-#   export CLIENT_ID=$(jq .azurerm_client_id landing.tfvars.json --raw-output)
-#   export CLIENT_SECRET=$(jq .azurerm_client_secret landing.tfvars.json --raw-output) 
-#   export TENANT_ID=$(jq .azurerm_tenant_id landing.tfvars.json --raw-output)
-#   az login --service-principal --username $CLIENT_ID --password $CLIENT_SECRET --tenant $TENANT_ID || { echo "::error::Error login into Azure. Most likely there is NOT a SECRET AVAILABLE for your environment that contains your Azure credentials."; exit 199; }
-#   az account set --subscription $SUBSCRIPTION_ID || { echo "::error::Error setting subscriptcion. Provide a correct subscription. Verify your Azure credentials."; exit 199; }
-#   rm -fr landing.tfvars.json
-#   echo "::endgroup::"
-# env: 
-#   TF_SECRET: ${{ secrets.DEV_CREDENTIALS }}
-# shell: bash
-       
-# az login --service-principal --username ${{ secrets.DEV_CLIENT_ID }} --password ${{ secrets.DEV_CLIENT_SECRET }} --tenant ${{ secrets.DEV_TENANT_ID }}
 
       - name: Terraform Init
         id: init
