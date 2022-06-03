@@ -20,7 +20,7 @@ on:
         
 env:
   STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
-  CONTAINER_NAME: tfstate
+  CONTAINER_NAME: tfstateiac
   RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
   TF_KEY: terraform.${{ inputs.environment }}.tfstate
   TF_VARS: env.${{ inputs.environment }}.tfvars
