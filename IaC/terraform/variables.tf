@@ -25,19 +25,6 @@ variable "tags" {
   description = "Specifies a map of tags to be applied to the resources created."
 }
 
-# Provider Variables
-variable "azurerm_subscription_id" {
-  type = string
-}
-variable "azurerm_client_id" {
-  type = string
-}
-variable "azurerm_client_secret" {
-  type = string
-}
-variable "azurerm_tenant_id" {
-  type = string
-}
 
 ##################################
 ##################################
