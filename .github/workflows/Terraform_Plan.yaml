@@ -2,8 +2,10 @@ name: Terraform Plan
 
 on:
   pull_request:
-    branches: main
-    paths: IaC_deployment/IaC/terraform
+    branches: 
+     - main
+    paths: 
+      - "IaC_deployment/IaC/terraform/**"
 
 jobs:
   terraform:
