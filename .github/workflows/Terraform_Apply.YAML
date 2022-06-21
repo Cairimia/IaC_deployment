@@ -2,7 +2,7 @@ name: Terraform Apply
 
 on:
   push:
-    branches: feature/**
+    branches: develop
     paths: IaC/terraform/**
 
 jobs:
@@ -11,8 +11,6 @@ jobs:
 
     env:
       DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_DEPLOY_CREDS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_DEPLOY_CREDS: ${{ secrets.PRO_CREDENTIALS }}
 
     steps:
       - uses: actions/checkout@v2
