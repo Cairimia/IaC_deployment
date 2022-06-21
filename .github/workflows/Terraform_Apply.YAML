@@ -2,8 +2,8 @@ name: Terraform Apply
 
 on:
   push:
-    branches: develop
-    paths: IaC\terraform\**
+    branches: main
+    paths: IaC_deployment/IaC/terraform/**
 
 jobs:
   terraform:
