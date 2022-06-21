@@ -1,6 +1,11 @@
 terraform {
   required_version = "~> 1.2.0"
-  backend "azurerm" {}
+  backend "azurerm" {
+    resource_group_name  = "IaC-Deployment-RG-dev"
+    storage_account_name = "iacsadev"
+    container_name       = "tfstateiac"
+    key                  = "terraform.dev.tfstate"
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
@@ -9,11 +14,6 @@ terraform {
   }
 }
 provider "azurerm" {
-  features {
-    key_vault {
-      recover_soft_deleted_key_vaults = true
-      purge_soft_delete_on_destroy    = true
-    }
-  }
-  skip_provider_registration = true
+  version = "=2.0.0"
+  features {}
 }
