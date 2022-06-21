@@ -5,12 +5,12 @@ data "azurerm_client_config" "current" {}
 # FOUNDATIONAL RESOURCES                         #
 ##################################################
 
-#Create a Resource Group
-resource "azurerm_resource_group" "rg" {
-  name     = var.resource_group_name
-  location = var.location
-  tags     = var.tags
-}
+# #Create a Resource Group
+# resource "azurerm_resource_group" "rg" {
+#   name     = var.resource_group_name
+#   location = var.location
+#   tags     = var.tags
+# }
 
 #Create a Key Vault for the Resource Group
 resource "azurerm_key_vault" "kv" {
