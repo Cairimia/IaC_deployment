@@ -5,7 +5,6 @@ on:
     branches: main
     paths: IaC_deployment/IaC/terraform
 
-
 jobs:
   terraform:
     runs-on: ubuntu-latest
