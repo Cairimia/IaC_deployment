@@ -14,7 +14,7 @@ data "azurerm_client_config" "current" {}
 
 #Create a Key Vault for the Resource Group
 resource "azurerm_key_vault" "kv" {
-  name                        = "${lower(var.key_vault_name)}${random_integer.kv_num.result}"
+  name                        = "${lower(var.key_vault_name)}${random_integer.kv_num.result}1"
   location                    = azurerm_resource_group.rg.location
   resource_group_name         = azurerm_resource_group.rg.name
   enable_rbac_authorization   = var.use_rbac_mode
