@@ -2,7 +2,9 @@ name: Terraform Plan
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: feature/**
+    paths: IaC/terraform/**
+
 
 jobs:
   terraform:
