@@ -1,0 +1,25 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches: main
+    paths: IaC_deployment/IaC/terraform
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    env:
+      DEV_DEPLOY_CREDS: ${{ secrets.DEV_CREDENTIALS }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
