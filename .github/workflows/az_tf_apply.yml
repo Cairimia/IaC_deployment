@@ -10,7 +10,7 @@ on:
       apply:
         description: 'Apply if Rerraform Plan is correct'
         required: true
-        type: choice  
+        type: strings  
         options:
         - yes
         - no
