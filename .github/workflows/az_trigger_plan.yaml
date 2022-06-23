@@ -9,10 +9,6 @@ on:
         - dev
         - pre
         - pro
-      apply:
-        description: 'Apply if Rerraform Plan is correct'
-        required: true
-        type: string
 
 jobs:
   Plan_Dev:
@@ -25,17 +21,16 @@ jobs:
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-  Deploy_Dev:
-    needs: Plan_Dev
-    if: "${{ github.event.inputs.apply == 'true' }}"
-    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    with:
-      environments: dev
-      apply: yes
-    secrets:
-      DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
-      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
-      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  # Deploy_Dev:
+  #   needs: Plan_Dev
+  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+  #   with:
+  #     environments: dev
+  #     apply: yes
+  #   secrets:
+  #     DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+  #     PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+  #     PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
