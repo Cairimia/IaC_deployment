@@ -9,12 +9,6 @@ on:
         - dev
         - pre
         - pro
-      apply:
-        description: 'Apply if Rerraform Plan is correct'
-        type: choice  
-        options:
-        - yes
-        - no
 
 jobs:
   Plan_Dev:
@@ -29,6 +23,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
+    if: "${{ github.event.inputs.apply == 'true' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
