@@ -1,4 +1,4 @@
-name: 'Trigger_TF_Per_Environment'
+name: 'Apply_TF_Per_Environment'
 on:
   workflow_dispatch:
     inputs:
@@ -17,7 +17,7 @@ on:
         - yes
         - no
 
-
+jobs:
   Deploy_Dev:
     needs: Plan_Dev
     if: "${{ github.event.inputs.apply == 'yes' }}"
