@@ -26,7 +26,7 @@ jobs:
     if: "${{ github.event.inputs.apply == 'true' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environments: dev
+      apply: yes
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
