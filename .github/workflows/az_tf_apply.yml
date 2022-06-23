@@ -3,10 +3,10 @@ name: 'Apply_TF_Plan'
 on:
   workflow_call:
     inputs:
-      environments:
-        description: 'Environment prefix to deploy into'
-        required: true
-        type: string
+      # environments:
+      #   description: 'Environment prefix to deploy into'
+      #   required: true
+      #   type: string
       apply:
         description: 'Apply if Rerraform Plan is correct'
         required: true

@@ -2,13 +2,13 @@ name: 'Apply_TF_Per_Environment'
 on:
   workflow_dispatch:
     inputs:
-      environments:
-        description: 'Environment to deploy: dev, pre or pro'
-        type: choice  
-        options:
-        - dev
-        - pre
-        - pro
+      # environments:
+      #   description: 'Environment to deploy: dev, pre or pro'
+      #   type: choice  
+      #   options:
+      #   - dev
+      #   - pre
+      #   - pro
       apply:
         description: 'Apply if Rerraform Plan is correct'
         required: true
