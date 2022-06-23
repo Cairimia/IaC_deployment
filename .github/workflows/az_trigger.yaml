@@ -9,6 +9,12 @@ on:
         - dev
         - pre
         - pro
+      apply:
+        description: 'Apply if Rerraform Plan is correct'
+        type: choice  
+        options:
+        - yes
+        - no
 
 jobs:
   Plan_Dev:
