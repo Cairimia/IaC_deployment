@@ -43,7 +43,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Pre:
-    needs: [Plan_Pre, Deploy_Dev]
+    needs: Plan_Pre
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
@@ -63,7 +63,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Prod:
-    needs: [Plan_Pro, Deploy_Pre]
+    needs: Plan_Pro
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
