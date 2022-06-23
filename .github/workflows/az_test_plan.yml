@@ -1,7 +1,6 @@
-### Reusable workflow to download terraform artifact built by `az_tf_plan` and apply the artifact/plan ###
-name: 'Apply_TF_Plan'
+name: 'TF_Check_Plan'
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       environments:
         description: 'Environment prefix to deploy into'
@@ -30,31 +29,39 @@ env:
   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
   PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-jobs:
-  apply-plan:
+jobs: 
+  build-plan:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
         working-directory: ${{ env.ROOT_TERRAFORM_MODULE }}
+        
+    steps:        
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: ${{ env.TF_KEY }}
-          path: ${{ env.ROOT_TERRAFORM_MODULE }}
-
-      - name: Decompress TF Plan artifact
-        run: unzip ${{ env.TF_KEY }}.zip
-
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1.3.2
+      
       - name: Az Login
         run:
           az login --allow-no-subscriptions
 
       - name: Terraform Init
         id: init
-        run: terraform init -migrate-state --backend-config="storage_account_name=$STORAGE_ACCOUNT" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP" --backend-config="key=$TF_KEY"
+        run: 
+          terraform init -migrate-state --backend-config="storage_account_name=$STORAGE_ACCOUNT" --backend-config="container_name=$CONTAINER_NAME" --backend-config="resource_group_name=$RESOURCE_GROUP" --backend-config="key=$TF_KEY"
 
-      - name: Terraform Apply
-        run: terraform apply plan.tfplan
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan --var-file=$TF_VARS --out=plan.tfplan
+        continue-on-error: true
+
+      - name: Terraform Plan Status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1

@@ -1,4 +1,4 @@
-name: 'Plan_TF_Per_Environment'
+name: 'Trigger_TF_Per_Environment'
 on:
   workflow_dispatch:
     inputs:
@@ -21,16 +21,15 @@ jobs:
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-  # Deploy_Dev:
-  #   needs: Plan_Dev
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-  #   with:
-  #     environments: dev
-  #     apply: yes
-  #   secrets:
-  #     DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
-  #     PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
-  #     PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  Deploy_Dev:
+    needs: Plan_Dev
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+    with:
+      environments: dev
+    secrets:
+      DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Plan_Pre:
     if: "${{ github.event.inputs.environments == 'pre' }}"
@@ -42,15 +41,15 @@ jobs:
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-  # Deploy_Pre:
-  #   needs: Plan_Pre
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-  #   with:
-  #     environments: pre
-  #   secrets:
-  #     DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
-  #     PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
-  #     PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  Deploy_Pre:
+    needs: Plan_Pre
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+    with:
+      environments: pre
+    secrets:
+      DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Plan_Pro:
     if: "${{ github.event.inputs.environments == 'pro' }}"
@@ -62,12 +61,12 @@ jobs:
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
-  # Deploy_Prod:
-  #   needs: Plan_Pro
-  #   uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-  #   with:
-  #     environments: pro
-  #   secrets:
-  #     DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
-  #     PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
-  #     PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+  Deploy_Prod:
+    needs: Plan_Pro
+    uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+    with:
+      environments: pro
+    secrets:
+      DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
+      PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
+      PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
