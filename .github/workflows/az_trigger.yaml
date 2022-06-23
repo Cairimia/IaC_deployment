@@ -9,6 +9,10 @@ on:
         - dev
         - pre
         - pro
+      apply:
+        description: 'Apply if Rerraform Plan is correct'
+        required: true
+        type: string
 
 jobs:
   Plan_Dev:
