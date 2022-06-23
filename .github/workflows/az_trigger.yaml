@@ -1,4 +1,4 @@
-name: 'Trigger Deployment per Environment'
+name: 'Trigger_TF_Per_Environment'
 on:
   workflow_dispatch:
     inputs:
@@ -15,7 +15,7 @@ jobs:
     if: "${{ github.event.inputs.environments == 'dev' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: dev
+      environments: dev
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -25,7 +25,7 @@ jobs:
     needs: Plan_Dev
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: dev
+      environments: dev
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -35,7 +35,7 @@ jobs:
     if: "${{ github.event.inputs.environments == 'pre' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: pre
+      environments: pre
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -45,7 +45,7 @@ jobs:
     needs: [Plan_Pre, Deploy_Dev]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: pre
+      environments: pre
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -55,7 +55,7 @@ jobs:
     if: "${{ github.event.inputs.environments == 'pro' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
-      environment: pro
+      environments: pro
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -65,7 +65,7 @@ jobs:
     needs: [Plan_Pro, Deploy_Pre]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
-      environment: pro
+      environments: pro
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}

@@ -6,7 +6,7 @@ variable "resource_group_name" {
 variable "location" {
   type        = string
   description = "The location/region where Azure resource will be created."
-  default     = "uksouth"
+  default     = "westeurope"
 }
 
 variable "key_vault_name" {
@@ -20,24 +20,13 @@ variable "use_rbac_mode" {
   default     = null
 }
 
+variable "environment_def" {
+  type        = string
+  description = "Specifies the env name"
+  default     = null
+}
+
 variable "tags" {
   type        = map(any)
   description = "Specifies a map of tags to be applied to the resources created."
-}
-
-
-##################################
-##################################
-
-variable "storage_config" {
-  type = list(object({
-    name                      = string
-    account_kind              = string
-    account_tier              = string
-    account_replication_type  = string
-    access_tier               = string
-    enable_https_traffic_only = bool
-    min_tls_version           = string
-    is_hns_enabled            = bool
-  }))
 }

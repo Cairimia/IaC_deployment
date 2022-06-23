@@ -2,7 +2,7 @@ name: 'Build_TF_Plan'
 on:
   workflow_call:
     inputs:
-      environment:
+      environments:
         description: 'Environment prefix to deploy into'
         required: true
         type: string
@@ -18,12 +18,12 @@ on:
         required: true
         
 env:
-  STORAGE_ACCOUNT: iacsa${{ inputs.environment }}
+  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environments }}
+  STORAGE_ACCOUNT: iacsa${{ inputs.environments }}
   CONTAINER_NAME: tfstateiac
-  RESOURCE_GROUP: IaC-Deployment-RG-${{ inputs.environment }}
-  TF_KEY: terraform.${{ inputs.environment }}.tfstate
-  TF_VARS: env.${{ inputs.environment }}.tfvars
-  ROOT_TERRAFORM_MODULE: 'IaC/terraform'
+  TF_KEY: terraform.${{ inputs.environments }}.tfstate
+  TF_VARS: ${{ inputs.environments }}.tfvars
+  ROOT_TERRAFORM_MODULE: 'IaC/terraform/${{ inputs.environments }}'
   ###AZURE Client details###
   DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
