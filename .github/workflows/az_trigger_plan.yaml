@@ -1,4 +1,4 @@
-name: 'Trigger_TF_Per_Environment'
+name: 'Plan_TF_Per_Environment'
 on:
   workflow_dispatch:
     inputs:
