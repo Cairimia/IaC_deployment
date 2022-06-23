@@ -19,7 +19,6 @@ on:
 
 jobs:
   Deploy_Dev:
-    needs: Plan_Dev
     if: "${{ github.event.inputs.apply == 'yes' }}"
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
