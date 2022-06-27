@@ -7,10 +7,10 @@ on:
         description: 'Environment prefix to deploy into'
         required: true
         type: string
-      # trigger_event:
-      #   description: 'Trigger event for workflow'
-      #   required: true
-      #   type: string
+      trigger_event:
+        description: 'Trigger event for workflow'
+        required: true
+        type: string
       # env_path:
       #   description: 'Environment path'
       #   required: true
