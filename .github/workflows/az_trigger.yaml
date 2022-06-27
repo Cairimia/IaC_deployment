@@ -27,15 +27,20 @@ jobs:
     #   DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
     #   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
     #   PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
+    
+  output_path:
+    runs-on: ubuntu-latest
+    needs: filter_path
+    steps:
+      - run: echo ${{ needs.filter_path.outputs.dev }}
+      - run: echo ${{ needs.filter_path.outputs.pre }}
+      - run: echo ${{ needs.filter_path.outputs.pro }}
 
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }}"
-    needs: filter_path
+    needs: [filter_path, output_path]
     if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-    strategy:
-      matrix:
-        path: ${{ needs.filter_path.outputs.dev }}
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
@@ -48,9 +53,6 @@ jobs:
     needs: [Plan_Dev, filter_path]
     if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    strategy:
-      matrix:
-        path: ${{ needs.filter_path.outputs.dev }}
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
@@ -76,9 +78,6 @@ jobs:
     needs: [Plan_Pre, filter_path]
     if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    strategy:
-      matrix:
-        path: ${{ needs.filter_path.outputs.pre }}
     with:
       environments: pre
       trigger_event: ${{ github.event_name }}
@@ -92,9 +91,6 @@ jobs:
     needs: filter_path
     if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
-    strategy:
-      matrix:
-        path: ${{ needs.filter_path.outputs.pre }}
     with:
       environments: pro
       trigger_event: ${{ github.event_name }}
@@ -107,9 +103,6 @@ jobs:
     needs: [Plan_Pro, filter_path]
     if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    strategy:
-      matrix:
-        path: ${{ needs.filter_path.outputs.pre }}
     with:
       environments: pro
       trigger_event: ${{ github.event_name }}
