@@ -1,21 +1,48 @@
 name: 'Trigger_TF_Per_Environment'
 on:
-  workflow_dispatch:
-    inputs:
-      environments:
-        description: 'Environment to deploy: dev, pre or pro'
-        type: choice  
-        options:
-        - dev
-        - pre
-        - pro
+  # workflow_dispatch:
+  #   inputs:
+  #     environments:
+  #       description: 'Environment to deploy: dev, pre or pro'
+  #       type: choice  
+  #       options:
+  #       - dev
+  #       - pre
+  #       - pro
+    pull_request:
+    push:
+      branches:
+        - master
+      paths:
+        - 'IaC/terraform/dev/**'
+        - 'IaC/terraform/pre/**'
+        - 'IaC/terraform/pro/**'
 
 jobs:
+
+  filter_path:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            dev:
+              - 'IaC/terraform/dev/**'
+            pre:
+              - 'IaC/terraform/pre/**'
+            pro:
+              - 'IaC/terraform/pro/**'
+
   Plan_Dev:
-    if: "${{ github.event.inputs.environments == 'dev' }}"
+    # if: "${{ github.event.inputs.environments == 'dev' }}"
+    needs: Filter
+    if: ${{ inputs.trigger_event == 'pull_request' && needs.filter_path.outputs.dev == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: dev
+      trigger_event: ${{ github.event_name }}
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -24,8 +51,10 @@ jobs:
   Deploy_Dev:
     needs: Plan_Dev
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
+    if: ${{ inputs.trigger_event == 'push' && inputs.paths contains 'dev' }}
     with:
       environments: dev
+      trigger_event: ${{ github.event_name }}
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
