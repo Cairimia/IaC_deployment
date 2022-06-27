@@ -24,7 +24,7 @@ resource "azurerm_storage_account" "mas" {
 }
 
 resource "azurerm_storage_account" "mas" {
-  name                     = "testcata${var.environment_def}22"
+  name                     = "testcata${var.environment_def}44"
   resource_group_name      = var.resource_group_name
   location                 = var.location
   account_tier             = "Standard"
