@@ -20,7 +20,7 @@ on:
 jobs:
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }"
-    if: ${{ inputs.trigger_event == 'pull_request' && inputs.env_path == 'IaC/terraform/dev/**' }}
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: dev
@@ -33,7 +33,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
-    if: ${{ inputs.trigger_event == 'push' && inputs.env_path == 'IaC/terraform/dev/**' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
@@ -46,7 +46,7 @@ jobs:
 
   Plan_Pre:
     # if: "${{ github.event.inputs.environments == 'pre' }}"
-    if: ${{ inputs.trigger_event == 'pull_request' && inputs.env_path == 'IaC/terraform/pre/**' }}
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pre
@@ -59,7 +59,7 @@ jobs:
 
   Deploy_Pre:
     needs: Plan_Pre
-    if: ${{ inputs.trigger_event == 'push' && inputs.env_path == 'IaC/terraform/pre/**' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
@@ -72,7 +72,7 @@ jobs:
 
   Plan_Pro:
     # if: "${{ github.event.inputs.environments == 'pro' }}"
-    if: ${{ inputs.trigger_event == 'pull_request' && inputs.env_path == 'IaC/terraform/pro/**' }}
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pro
@@ -85,7 +85,7 @@ jobs:
 
   Deploy_Prod:
     needs: Plan_Pro
-    if: ${{ inputs.trigger_event == 'push' && inputs.env_path == 'IaC/terraform/pro/**' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
