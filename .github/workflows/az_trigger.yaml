@@ -20,12 +20,11 @@ on:
 jobs:
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }}"
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.env_path == 'IaC/terraform/dev/**' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: dev
-      trigger_event: ${{ github.event_name }}
-      # env_path: 'IaC/terraform/dev/**'
+      env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -37,7 +36,6 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
-      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -46,12 +44,11 @@ jobs:
 
   Plan_Pre:
     # if: "${{ github.event.inputs.environments == 'pre' }}"
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' && github.env_path == 'IaC/terraform/pre/**' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pre
-      trigger_event: ${{ github.event_name }}
-      # env_path: 'IaC/terraform/pre/**'
+      env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -63,7 +60,6 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
-      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -76,7 +72,6 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pro
-      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -89,7 +84,6 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
-      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
