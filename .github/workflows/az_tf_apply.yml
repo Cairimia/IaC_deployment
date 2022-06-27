@@ -40,7 +40,7 @@ env:
 
 jobs:
   apply-plan:
-  if: ${{ inputs.trigger_event == 'push' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     runs-on: ubuntu-latest
     defaults:
       run:
