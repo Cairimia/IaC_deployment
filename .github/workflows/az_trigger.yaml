@@ -36,7 +36,7 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
-      # env_path: 'IaC/terraform/dev/**'
+      env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -60,7 +60,7 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
-      # env_path: 'IaC/terraform/pre/**'
+      env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -72,7 +72,7 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pro
-      # env_path: 'IaC/terraform/pro/**'
+      env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -84,7 +84,7 @@ jobs:
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
-      # env_path: 'IaC/terraform/pro/**'
+      env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
