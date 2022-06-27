@@ -20,6 +20,10 @@ on:
 jobs:
   filter_path:
     runs-on: ubuntu-latest
+    outputs:
+      dev_path: ${{ steps.filter.outputs.dev }}
+      pre_path: ${{ steps.filter.outputs.pre }}
+      pro_path: ${{ steps.filter.outputs.pro }}
     steps:
     - uses: actions/checkout@v2
     - uses: dorny/paths-filter@v2
@@ -32,7 +36,9 @@ jobs:
             - 'IaC/terraform/pre/**'
           pro:
             - 'IaC/terraform/pro/**'
-    outputs:
-      dev: ${{ steps.filter.outputs.dev }}
-      pre: ${{ steps.filter.outputs.pre }}
-      pro: ${{ steps.filter.outputs.pro }}
+
+  output_paths:
+    runs-on: ubuntu-latest
+    needs: filter_path
+    steps:
+      - run: echo ${{needs.filter_path.outputs.dev_path}} ${{needs.jfilter_path.outputs.pre_path}} ${{needs.jfilter_path.outputs.pro_path}}
