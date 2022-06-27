@@ -19,7 +19,6 @@ on:
         - 'IaC/terraform/pro/**'
 
 jobs:
-
   filter_path:
       runs-on: ubuntu-latest
       steps:
@@ -37,7 +36,7 @@ jobs:
 
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }}"
-    needs: Filter
+    needs: filter_path
     if: ${{ inputs.trigger_event == 'pull_request' && needs.filter_path.outputs.dev == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
@@ -49,7 +48,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Dev:
-    needs: Plan_Dev
+    needs: [Plan_Dev, filter_path]
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     if: ${{ inputs.trigger_event == 'push' && needs.filter_path.outputs.dev == 'true' }}
     with:
