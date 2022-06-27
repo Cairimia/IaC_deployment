@@ -27,18 +27,10 @@ jobs:
     #   DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
     #   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
     #   PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
-    
-  output_path:
-    runs-on: ubuntu-latest
-    needs: filter_path
-    steps:
-      - run: echo ${{ needs.filter_path.outputs.dev }}
-      - run: echo ${{ needs.filter_path.outputs.pre }}
-      - run: echo ${{ needs.filter_path.outputs.pro }}
 
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }}"
-    needs: [filter_path, output_path]
+    needs: filter_path
     if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
