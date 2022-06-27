@@ -40,7 +40,6 @@ jobs:
 
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }"
-    needs: filter_path
     if: ${{ inputs.trigger_event == 'pull_request' && inputs.env_path == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
@@ -53,7 +52,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Dev:
-    needs: [Plan_Dev, filter_path]
+    needs: Plan_Dev
     if: ${{ inputs.trigger_event == 'push' && inputs.env_path == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
@@ -67,7 +66,6 @@ jobs:
 
   Plan_Pre:
     # if: "${{ github.event.inputs.environments == 'pre' }}"
-    needs: filter_path
     if: ${{ inputs.trigger_event == 'pull_request' && inputs.env_path == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
@@ -80,7 +78,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Pre:
-    needs: [Plan_Pre, filter_path]
+    needs: Plan_Pre
     if: ${{ inputs.trigger_event == 'push' && inputs.env_path == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
@@ -94,7 +92,6 @@ jobs:
 
   Plan_Pro:
     # if: "${{ github.event.inputs.environments == 'pro' }}"
-    needs: filter_path
     if: ${{ inputs.trigger_event == 'pull_request' && inputs.env_path == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
@@ -107,7 +104,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Prod:
-    needs: [Plan_Pro, filter_path]
+    needs: Plan_Pro
     if: ${{ inputs.trigger_event == 'push' && inputs.env_path == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
