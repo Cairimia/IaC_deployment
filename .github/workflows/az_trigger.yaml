@@ -20,8 +20,8 @@ on:
 jobs:
   filter_path:
     uses: Cairimia/IaC_deployment/.github/workflows/filter_path.yml@main
-    # with:
-    #   trigger_event: ${{ github.event_name }}
+    with:
+      trigger_event: ${{ github.event_name }}
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
