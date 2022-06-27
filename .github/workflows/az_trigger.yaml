@@ -31,8 +31,11 @@ jobs:
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }}"
     needs: filter_path
-    if: ${{ inputs.trigger_event == 'pull_request' && needs.filter_path.outputs.dev == 'true' }}
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+    strategy:
+      matrix:
+        path: ${{ needs.filter_path.outputs.dev }}
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
@@ -43,8 +46,11 @@ jobs:
 
   Deploy_Dev:
     needs: [Plan_Dev, filter_path]
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    if: ${{ inputs.trigger_event == 'push' && needs.filter_path.outputs.dev == 'true' }}
+    strategy:
+      matrix:
+        path: ${{ needs.filter_path.outputs.dev }}
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
@@ -56,7 +62,7 @@ jobs:
   Plan_Pre:
     # if: "${{ github.event.inputs.environments == 'pre' }}"
     needs: filter_path
-    if: ${{ inputs.trigger_event == 'pull_request' && needs.filter_path.outputs.pre == 'true' }}
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pre
@@ -68,8 +74,11 @@ jobs:
 
   Deploy_Pre:
     needs: [Plan_Pre, filter_path]
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    if: ${{ inputs.trigger_event == 'push' && needs.filter_path.outputs.pre == 'true' }}
+    strategy:
+      matrix:
+        path: ${{ needs.filter_path.outputs.pre }}
     with:
       environments: pre
       trigger_event: ${{ github.event_name }}
@@ -81,8 +90,11 @@ jobs:
   Plan_Pro:
     # if: "${{ github.event.inputs.environments == 'pro' }}"
     needs: filter_path
-    if: ${{ inputs.trigger_event == 'pull_request' && needs.filter_path.outputs.pro == 'true' }}
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
+    strategy:
+      matrix:
+        path: ${{ needs.filter_path.outputs.pre }}
     with:
       environments: pro
       trigger_event: ${{ github.event_name }}
@@ -93,8 +105,11 @@ jobs:
 
   Deploy_Prod:
     needs: [Plan_Pro, filter_path]
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    if: ${{ inputs.trigger_event == 'push' && needs.filter_path.outputs.pro == 'true' }}
+    strategy:
+      matrix:
+        path: ${{ needs.filter_path.outputs.pre }}
     with:
       environments: pro
       trigger_event: ${{ github.event_name }}

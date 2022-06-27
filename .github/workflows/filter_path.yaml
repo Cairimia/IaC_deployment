@@ -19,16 +19,20 @@ on:
 
 jobs:
   filter_path:
-      runs-on: ubuntu-latest
-      steps:
-      - uses: actions/checkout@v2
-      - uses: dorny/paths-filter@v2
-        id: filter
-        with:
-          filters: |
-            dev:
-              - 'IaC/terraform/dev/**'
-            pre:
-              - 'IaC/terraform/pre/**'
-            pro:
-              - 'IaC/terraform/pro/**'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          dev:
+            - 'IaC/terraform/dev/**'
+          pre:
+            - 'IaC/terraform/pre/**'
+          pro:
+            - 'IaC/terraform/pro/**'
+    outputs:
+      dev: ${{ steps.filter.outputs.dev }}
+      pre: ${{ steps.filter.outputs.pre }}
+      pro: ${{ steps.filter.outputs.pro }}
