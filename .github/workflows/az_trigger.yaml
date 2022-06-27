@@ -51,7 +51,7 @@ jobs:
   Deploy_Dev:
     needs: Plan_Dev
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
-    if: ${{ inputs.trigger_event == 'push' && inputs.paths contains 'dev' }}
+    if: ${{ inputs.trigger_event == 'push' && needs.filter_path.outputs.dev == 'true' }}
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
