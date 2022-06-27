@@ -39,6 +39,7 @@ env:
 
 jobs: 
   build-plan:
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     runs-on: ubuntu-latest
     defaults:
       run:
