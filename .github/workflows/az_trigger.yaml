@@ -21,8 +21,8 @@ jobs:
   filter_path:
     if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/filter_path.yaml@main
-    with:
-      trigger_event: ${{ github.event_name }}
+    # with:
+    #   trigger_event: ${{ github.event_name }}
     # secrets:
     #   DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
     #   PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}

@@ -1,11 +1,11 @@
 name: 'Filter_Path'
 on:
   workflow_call:
-    inputs:
-      trigger_event:
-        description: 'Trigger event for workflow'
-        required: true
-        type: string
+    # inputs:
+    #   trigger_event:
+    #     description: 'Trigger event for workflow'
+    #     required: true
+    #     type: string
     # secrets:
     #   DEV_CREDENTIALS: 
     #     description: 'Specifies the Azure DEV CREDS.'
