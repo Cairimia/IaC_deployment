@@ -1,30 +1,30 @@
 name: 'Trigger_TF_Per_Environment'
 on:
-  workflow_dispatch:
-    inputs:
-      environments:
-        description: 'Environment to deploy: dev, pre or pro'
-        type: choice  
-        options:
-        - dev
-        - pre
-        - pro
-    # pull_request:
-    #   branches:
-    #     - main
-    #   paths:
-    #     - 'IaC/terraform/dev/**'
-    #     - 'IaC/terraform/pre/**'
-    #     - 'IaC/terraform/pro/**'
+  # workflow_dispatch:
+  #   inputs:
+  #     environments:
+  #       description: 'Environment to deploy: dev, pre or pro'
+  #       type: choice  
+  #       options:
+  #       - dev
+  #       - pre
+  #       - pro
+    pull_request:
+      branches:
+        - main
+      paths:
+        - 'IaC/terraform/dev/**'
+        - 'IaC/terraform/pre/**'
+        - 'IaC/terraform/pro/**'
 
 jobs:
   Plan_Dev:
-    if: "${{ github.event.inputs.environments == 'dev' }}"
-    # if: ${{ inputs.trigger_event == 'pull_request' }}
+    # if: "${{ github.event.inputs.environments == 'dev' }}"
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: dev
-      # trigger_event: ${{ github.event_name }}
+      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -33,11 +33,11 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
-    # if: ${{ inputs.trigger_event == 'push' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
-      # trigger_event: ${{ github.event_name }}
+      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -45,12 +45,12 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Plan_Pre:
-    if: "${{ github.event.inputs.environments == 'pre' }}"
-    # if: ${{ inputs.trigger_event == 'pull_request' }}
+    # if: "${{ github.event.inputs.environments == 'pre' }}"
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pre
-      # trigger_event: ${{ github.event_name }}
+      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -59,11 +59,11 @@ jobs:
 
   Deploy_Pre:
     needs: Plan_Pre
-    # if: ${{ inputs.trigger_event == 'push' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
-      # trigger_event: ${{ github.event_name }}
+      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -71,12 +71,12 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Plan_Pro:
-    if: "${{ github.event.inputs.environments == 'pro' }}"
-    # if: ${{ inputs.trigger_event == 'pull_request' }}
+    # if: "${{ github.event.inputs.environments == 'pro' }}"
+    if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pro
-      # trigger_event: ${{ github.event_name }}
+      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
@@ -85,11 +85,11 @@ jobs:
 
   Deploy_Prod:
     needs: Plan_Pro
-    # if: ${{ inputs.trigger_event == 'push' }}
+    if: ${{ inputs.trigger_event == 'push' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
-      # trigger_event: ${{ github.event_name }}
+      trigger_event: ${{ github.event_name }}
       # env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
