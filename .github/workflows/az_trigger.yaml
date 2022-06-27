@@ -18,25 +18,25 @@ on:
         - 'IaC/terraform/pro/**'
 
 jobs:
-  filter_path:
-    if: ${{ github.event_name == 'pull_request' }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: dorny/paths-filter@v2
-      id: filter
-      with:
-        filters: |
-          dev:
-            - 'IaC/terraform/dev/**'
-          pre:
-            - 'IaC/terraform/pre/**'
-          pro:
-            - 'IaC/terraform/pro/**'
-    outputs:
-      dev_path: ${{ steps.filter.outputs.dev }}
-      pre_path: ${{ steps.filter.outputs.pre }}
-      pro_path: ${{ steps.filter.outputs.pro }}
+  # filter_path:
+  #   if: ${{ github.event_name == 'pull_request' }}
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #   - uses: dorny/paths-filter@v2
+  #     id: filter
+  #     with:
+  #       filters: |
+  #         dev:
+  #           - 'IaC/terraform/dev/**'
+  #         pre:
+  #           - 'IaC/terraform/pre/**'
+  #         pro:
+  #           - 'IaC/terraform/pro/**'
+  #   outputs:
+  #     dev_path: ${{ steps.filter.outputs.dev }}
+  #     pre_path: ${{ steps.filter.outputs.pre }}
+  #     pro_path: ${{ steps.filter.outputs.pro }}
 
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }"
@@ -46,7 +46,7 @@ jobs:
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
-      env_path: ${{ needs.filter_path.outputs.dev_path }}
+      env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -59,7 +59,7 @@ jobs:
     with:
       environments: dev
       trigger_event: ${{ github.event_name }}
-      env_path: ${{ needs.filter_path.outputs.dev_path }}
+      env_path: 'IaC/terraform/dev/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -73,7 +73,7 @@ jobs:
     with:
       environments: pre
       trigger_event: ${{ github.event_name }}
-      env_path: ${{ needs.filter_path.outputs.pre_path }}
+      env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -86,7 +86,7 @@ jobs:
     with:
       environments: pre
       trigger_event: ${{ github.event_name }}
-      env_path: ${{ needs.filter_path.outputs.pre_path }}
+      env_path: 'IaC/terraform/pre/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -100,7 +100,7 @@ jobs:
     with:
       environments: pro
       trigger_event: ${{ github.event_name }}
-      env_path: ${{ needs.filter_path.outputs.pro_path }}
+      env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
@@ -113,7 +113,7 @@ jobs:
     with:
       environments: pro
       trigger_event: ${{ github.event_name }}
-      env_path: ${{ needs.filter_path.outputs.pro_path }}
+      env_path: 'IaC/terraform/pro/**'
     secrets:
       DEV_CREDENTIALS: ${{ secrets.DEV_CREDENTIALS }}
       PRE_CREDENTIALS: ${{ secrets.PRE_CREDENTIALS }}
