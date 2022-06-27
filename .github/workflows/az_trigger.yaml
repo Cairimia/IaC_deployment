@@ -19,7 +19,7 @@ on:
 
 jobs:
   Plan_Dev:
-    if: "${{ github.event.inputs.environments == 'dev' }"
+    if: "${{ github.event.inputs.environments == 'dev' }}"
     # if: ${{ inputs.trigger_event == 'pull_request' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
