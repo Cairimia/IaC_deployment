@@ -20,7 +20,7 @@ on:
 jobs:
   filter_path:
     if: ${{ inputs.trigger_event == 'pull_request' }}
-    uses: Cairimia/IaC_deployment/.github/workflows/filter_path.yml@main
+    uses: Cairimia/IaC_deployment/.github/workflows/filter_path.yaml@main
     with:
       trigger_event: ${{ github.event_name }}
     # secrets:
