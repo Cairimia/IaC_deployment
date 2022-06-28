@@ -53,7 +53,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Dev:
-    needs: Path_filter
+    needs: [Plan_Dev, Path_filter]
     if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_dev == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
@@ -76,7 +76,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Pre:
-    needs: Path_filter
+    needs: [Plan_Dev, Path_filter]
     if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_pre == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
@@ -99,7 +99,7 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Prod:
-    needs: Path_filter
+    needs: [Plan_Dev, Path_filter]
     if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_pro == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
