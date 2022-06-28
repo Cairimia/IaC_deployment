@@ -18,7 +18,7 @@ on:
         - 'IaC/terraform/pro/**'
 
 jobs:
-
+  # Find the path was changed to determine which environment to push changes
   Path_filter:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
@@ -53,7 +53,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_dev == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
@@ -76,7 +76,7 @@ jobs:
 
   Deploy_Pre:
     needs: Plan_Pre
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_pre == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
@@ -99,7 +99,7 @@ jobs:
 
   Deploy_Prod:
     needs: Plan_Pro
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_pro == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
