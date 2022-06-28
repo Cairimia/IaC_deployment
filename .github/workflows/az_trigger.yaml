@@ -53,7 +53,7 @@ jobs:
 
   Deploy_Dev:
     needs: [Plan_Dev, Path_filter]
-    if: ${{ github.event.pull_request.merged == true && needs.Path_filter.outputs.path_dev == 'true' }}
+    if: ${{ github.event.pull_request.merged && needs.Path_filter.outputs.path_dev == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
