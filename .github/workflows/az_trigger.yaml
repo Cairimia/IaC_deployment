@@ -18,9 +18,26 @@ on:
         - 'IaC/terraform/pro/**'
 
 jobs:
+
+  Path_filter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          path_dev:
+            - 'IaC/terraform/dev/**'
+          path_pre:
+            - 'IaC/terraform/pre/**'
+          path_pro:
+            - 'IaC/terraform/pro/**'
+
   Plan_Dev:
     # if: "${{ github.event.inputs.environments == 'dev' }}"
-    if: ${{ github.event_name == 'pull_request' }}
+    needs: Path_filter
+    if: ${{ github.event_name == 'pull_request' && needs.filter.outputs.path_dev == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: dev
@@ -42,7 +59,8 @@ jobs:
 
   Plan_Pre:
     # if: "${{ github.event.inputs.environments == 'pre' }}"
-    if: ${{ github.event_name == 'pull_request' }}
+    needs: Path_filter
+    if: ${{ github.event_name == 'pull_request' && needs.filter.outputs.path_pre == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pre
@@ -64,7 +82,8 @@ jobs:
 
   Plan_Pro:
     # if: "${{ github.event.inputs.environments == 'pro' }}"
-    if: ${{ github.event_name == 'pull_request' }}
+    needs: Path_filter
+    if: ${{ github.event_name == 'pull_request' && needs.filter.outputs.path_pro == 'true' }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_plan.yml@main
     with:
       environments: pro
