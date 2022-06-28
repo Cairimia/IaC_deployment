@@ -15,7 +15,7 @@ resource "azurerm_storage_account" "mas" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_account" "mas" {
+resource "azurerm_storage_account" "mas_33" {
   name                     = "testcata${var.environment_def}33"
   resource_group_name      = var.resource_group_name
   location                 = var.location
