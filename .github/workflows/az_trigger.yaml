@@ -1,5 +1,5 @@
 name: 'Trigger_TF_Per_Environment'
-on:
+on: [push, pull_request]
   # workflow_dispatch:
   #   inputs:
   #     environments:
@@ -9,7 +9,6 @@ on:
   #       - dev
   #       - pre
   #       - pro
-    pull_request:
       branches:
         - main
       paths:
