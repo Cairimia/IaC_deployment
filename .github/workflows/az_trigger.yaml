@@ -20,7 +20,7 @@ on:
 jobs:
   # Find the path was changed to determine which environment to push changes
   Path_filter:
-    if: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/main' }}
+    if: ${{ github.event_name == 'pull_request'}}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
