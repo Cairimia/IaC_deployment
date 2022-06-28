@@ -9,6 +9,7 @@ on:
   #       - dev
   #       - pre
   #       - pro
+    push:
     pull_request:
       branches:
         - main
