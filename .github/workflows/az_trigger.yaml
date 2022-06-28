@@ -53,7 +53,7 @@ jobs:
 
   Deploy_Dev:
     needs: Plan_Dev
-    if: ${{ github.event.pull_request.merged == true }}
+    if: ${{ github.event.pull_request.merged }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
