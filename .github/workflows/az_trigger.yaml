@@ -9,7 +9,6 @@ on:
   #       - dev
   #       - pre
   #       - pro
-    push:
     pull_request:
       branches:
         - main
@@ -21,7 +20,7 @@ on:
 jobs:
   # Find the path was changed to determine which environment to push changes
   Path_filter:
-    if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' }}
+    if: ${{ github.event_name == 'pull_request' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -53,8 +52,8 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Dev:
-    needs: [Plan_Dev, Path_filter]
-    if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_dev == 'true' }}
+    needs: Plan_Dev
+    if: ${{ github.event.pull_request.merged == true }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: dev
@@ -76,8 +75,8 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Pre:
-    needs: [Plan_Dev, Path_filter]
-    if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_pre == 'true' }}
+    needs: Plan_Pre
+    if: ${{ github.event.pull_request.merged == true }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pre
@@ -99,8 +98,8 @@ jobs:
       PRO_CREDENTIALS: ${{ secrets.PRO_CREDENTIALS }}
 
   Deploy_Prod:
-    needs: [Plan_Dev, Path_filter]
-    if: ${{ github.event_name == 'push' && needs.Path_filter.outputs.path_pro == 'true' }}
+    needs: Plan_Pro
+    if: ${{ github.event.pull_request.merged == true }}
     uses: Cairimia/IaC_deployment/.github/workflows/az_tf_apply.yml@main
     with:
       environments: pro
